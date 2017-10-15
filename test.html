@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  #main{
+    width:600px;
+    height: 400px;
+  }
+  </style>
+  <script src="./echarts.js"></script>
+</head>
+<body>
+  <div id="main"></div>
+  <script>
+    var mychart = echarts.init(document.getElementById("main"));
+    mychart.setOption({
+     title:{
+       text:"销量图",
+       subtext:'gagaga',
+       show:true,
+       left:"left",
+       borderColor:'green',
+       borderWidth:5
+     },
+     toolbox: {
+       show:true,
+       orient:'verticle',
+      itemSize:15,
+      itemGap:5,
+       feature:{
+         dataView:{show:true},
+         restore:{show:true},
+         dataZoom:{show:true},
+         saveAsImage:{show:true},
+         magicType:{
+           type:['line','bar']
+         }
+       }
+     },
+     tooltip:{
+       show:true,
+       trigger:'axis'
+     },
+     legend:{
+       data:['销量']
+     },
+     xAxis:{
+       data:['饼干','饮料','面包','口香糖']
+     },
+     yAxis:{},
+     series:[{
+       name:'销量',
+       type:'line',
+       data:[10,20,6,7],
+       markPoint:{
+         data:[
+           {type:'max',name:'最大值'},
+           {type:'min',name:'最小值',symbol:'arrow',animation:true},
+           {type:'average',name:'平均值'}
+         ]
+       },
+       markLine:{
+         data:[{type:'average',name:'平均值'}]
+       }
+     },{
+       name:'产量',
+       type:'line',
+       data:[10,20,6,7]
+     }]
+   });
+  </script>
+</body>
+</html>

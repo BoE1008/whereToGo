@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  #main{
+    width: 600px;
+    height: 400px;
+  }
+  </style>
+  <script src="./echarts.js"></script>
+</head>
+<body>
+  <div id="main"></div>
+  <script type="text/javascript">
+    var myChart  = echarts.init(document.getElementById('main'));
+    myChart.setOption({
+      title:{
+        text:'销量',
+        subtext:'练习',
+        borderColor:'red'
+      },
+      series:[{
+        name:"完成率",
+        type:'gauge',
+        data:[
+          {
+            value:32,
+            name:'直销'
+          }
+        ]
+      }]
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 100px;
+    }
+
+    #searchBtn {
+      margin-top: 20px;
+    }
+
+    #main {
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-2">
+        <form class="form-horizontal">
+          <input type="input" id="placeInput" class="form-control" value="太湖" placeholder="安徽省太湖县" autofocus>
+          <input type="button" id="searchBtn" class="btn btn-success" value="查询">
+        </form>
+      </div>
+      <div class="col-md-7">
+        <div id="main"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="./jquery-3.2.1.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="./echarts.js"></script>
+  <script src="china.js"></script>
+  <script src="beijing.js"></script>
+  <script type="text/javascript">
+    var token = "fHrNQj6DHTjZtfTvfqbsuvTzKc5V9SBl";
+    var url = 'http://api.map.baidu.com/geocoder/v2/?output=json&ak=' + token + '&address=';
+    var inp = $("#placeInput");
+    var btn = $("#searchBtn");
+    var myCharts = echarts.init(document.getElementById('main'));
+    var realData = [];
+    btn.click(function() {
+      var content = inp.val();
+      $.ajax({
+        url: url + content + "&callback=?",
+        type: 'get',
+        dataType: 'json',
+        success: function(res) {
+          if (res.status === 0) {
+            console.log(res);
+            var loc = res.result.location;
+            realData.push({
+              name:content,
+              value:[loc.lng,loc.lat]
+            });
+            drawMap(content);
+          }
+        }
+      })
+    });
+
+    function drawMap(place) {
+      var option = {
+        title: {
+          text: "whereToGo",
+          subtext: '2017年去过的地方',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        toolbox: {
+          orient:"verticle",
+          feature: {
+            dataView: {
+              show: true
+            },
+            restore: {
+              show: true
+            },
+            dataZoom: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            },
+            magicType: {
+              type: ['line', 'pie']
+            }
+          }
+        },
+        geo: {
+          map: 'china',
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
+          roam: true,
+          itemStyle: {
+            normal: {
+              areaColor: '#323c48',
+              borderColor: '#111'
+            },
+            emphasis: {
+              areaColor: '#2a333d'
+            }
+          }
+        },
+        series: [{
+          name:'address',
+          type:'scatter',
+          coordinateSystem:'geo',
+          data:realData
+        }]
+      }
+
+
+      myCharts.setOption(option);
+    }
+    //
+  </script>
+</body>
+
+</html>

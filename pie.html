@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #main{
+      width: 600px;
+      height: 400px;
+    }
+  </style>
+  <script src="./echarts.js"></script>
+</head>
+<body>
+  <div id="main"></div>
+  <script type="text/javascript">
+    var myChart  = echarts.init(document.getElementById("main"));
+    myChart.setOption({
+      title:{
+        text:'饼图',
+        subtext:'练习'
+      },
+      toolbox:{
+        show:true,
+        feature:{
+          dataView:{show:true},
+          restore:{show:true},
+          dataZoom:{show:true},
+          saveAsImage:{show:true},
+          magicType:{type:['line','pie']}
+        }
+      },
+      tooltip:{
+        show:true,
+        trigger:'axis'
+      },
+      legend:{
+        orient:'verticle',
+        left:"center",
+        data:["调查问卷","尖酸刻薄","大胆看到","级手机号","打打杀杀所","打哈哈时代大厦"]
+      },
+      series:[{
+        name:'销量',
+        type:"pie",
+        radius:'50%',
+        center:['50%','60%'],
+        hoverOffset:20,
+        selectedMode:true,
+        data:[
+          {value:520,name:"调查问卷"},
+          {value:158,name:"尖酸刻薄"},
+          {value:201,name:"大胆看到"},
+          {value:360,name:"级手机号"},
+          {value:485,name:"打打杀杀所"},
+          {value:601,name:"打哈哈时代大厦"},
+          {value:650,name:"大大阿达大爱的"}
+        ]
+      }]
+    })
+  </script>
+</body>
+</html>
